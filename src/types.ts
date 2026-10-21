@@ -23,7 +23,7 @@ export type Basics = {
 
 export type Work = {
   name?: string
-  // non-standard attribute
+  // legacy attribute from older resumake.io versions, migrated to `name`
   company?: string
 
   position?: string

@@ -74,8 +74,16 @@ const generator: Generator = {
           line2 += ` \\textit{GPA: ${score}}`
         }
 
-        if (startDate || endDate) {
-          const gradLine = `${startDate || ''} - ${endDate || ''}`
+        let gradLine = ''
+        if (startDate && endDate) {
+          gradLine = `${startDate} - ${endDate}`
+        } else if (startDate) {
+          gradLine = `${startDate} - Present`
+        } else if (endDate) {
+          gradLine = endDate
+        }
+
+        if (gradLine) {
           line2 += line2 ? ` \\hfill ${gradLine}` : gradLine
         }
 
@@ -161,12 +169,12 @@ const generator: Generator = {
 
     return source`
       \\header{${heading || 'Skills'}}
-      \\begin{tabular}{ l l }
+      \\begin{tabularx}{\\linewidth}{ l >{\\raggedright\\arraybackslash}X @{} }
       ${skills.map((skill) => {
         const { name = 'Misc', keywords = [] } = skill
         return `${name}: & ${keywords.join(', ')} \\\\`
       })}
-      \\end{tabular}
+      \\end{tabularx}
       \\vspace{2mm}
     `
   },
@@ -323,6 +331,7 @@ function template1(values: FormValues) {
     \\usepackage{amsmath}
     \\usepackage{amssymb}
     \\usepackage{textcomp}
+    \\usepackage{tabularx}
     \\usepackage[utf8]{inputenc}
     \\usepackage[T1]{fontenc}
     \\textheight=10in

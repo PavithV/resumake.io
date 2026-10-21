@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import path from 'path'
 import Archiver from 'archiver'
 import { stripIndent } from 'common-tags'
 import getTemplateData from '../../lib/templates'
@@ -37,8 +38,14 @@ function generateSourceCode(formData: FormValues) {
   zip.append(prettyDoc, { name: 'resume.tex' })
   zip.append(readme, { name: 'README.md' })
 
-  if (opts.inputs) {
-    zip.directory(opts.inputs, '../')
+  // Same layout as the in-browser compile in lib/latex.ts
+  for (const file of opts.inputs || []) {
+    zip.file(path.join('public', file), { name: path.basename(file) })
+  }
+  for (const file of opts.fonts || []) {
+    zip.file(path.join('public', file), {
+      name: `fonts/${path.basename(file)}`
+    })
   }
 
   zip.finalize()

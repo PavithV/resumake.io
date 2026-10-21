@@ -29,7 +29,11 @@ const ResumePage = styled(Page)`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.5em 0 10rem 0;
+  padding: 1.5em 0 0;
+
+  &:last-child {
+    padding-bottom: 10rem;
+  }
 
   canvas {
     max-width: 95% !important;
@@ -106,8 +110,7 @@ async function downloadSource() {
 
 export function Preview() {
   const [resume] = useAtom(resumeAtom)
-  const [, setPageCount] = useState(1)
-  const [pageNumber] = useState(1)
+  const [pageCount, setPageCount] = useState(1)
   const [scale] = useState(document.body.clientWidth > 1440 ? 1.75 : 1)
 
   const handleDocumentLoadSuccess = useCallback((pdf: PDFDocumentProxy) => {
@@ -138,13 +141,18 @@ export function Preview() {
           onLoadSuccess={handleDocumentLoadSuccess}
           loading=""
         >
-          <ResumePage
-            pageNumber={pageNumber}
-            scale={scale}
-            renderAnnotationLayer={false}
-            renderTextLayer={false}
-            loading=""
-          />
+          {Array.from({ length: pageCount }, (_, i) => (
+            <ResumePage
+              key={i}
+              pageNumber={i + 1}
+              scale={scale}
+              renderAnnotationLayer={false}
+              renderTextLayer={false}
+              loading=""
+              // pageCount of the previous PDF may briefly exceed the new one
+              error=""
+            />
+          ))}
         </ResumeDocument>
       </PdfContainer>
     </Output>

@@ -15,6 +15,7 @@ import { resumeAtom } from '../../../atoms/resume'
 import { FormValues } from '../../../types'
 
 import latex from '../../../lib/latex'
+import { normalizeResume } from '../../../lib/sanitize'
 import getTemplateData from '../../../lib/templates'
 
 async function generateResume(formData: FormValues): Promise<string> {
@@ -46,7 +47,7 @@ export function Form() {
     if (lastSession) {
       // TODO: validate JSON schema using Zod
       const jsonResume = JSON.parse(lastSession) as FormValues
-      formContext.reset(jsonResume)
+      formContext.reset(normalizeResume(jsonResume))
     }
     const subscription = formContext.watch((data) => {
       localStorage.setItem('jsonResume', JSON.stringify(data))

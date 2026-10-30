@@ -13,7 +13,7 @@ Ergebnis des Ponytail-Audits vom 2026-10-30. Die Punkte werden der Reihe nach ab
 - [x] **9. `getTemplateData` als 150-Zeilen-Switch** – Tabelle statt Switch, Konstanten entfallen. *Neuer Export `TEMPLATE_IDS`; Ergebnis alt/neu für IDs 0–11 gleich (inkl. Fallback auf 1).*
 - [x] **10. Toter Code** – `atoms/progress.ts`, `TEMPLATE10`, `NEWLINE`, `FormState`, `interface Resume`, `prettyDoc`-Rest.
 - [x] **11. Griff-Symbole ohne Funktion** – `Sidebar.tsx`, `Highlights.tsx`: entfernen.
-- [ ] **12. `/about`-Link führt auf 404** – `src/pages/index.tsx`: entfernen.
+- [x] **12. `/about`-Link führt auf 404** – `src/pages/index.tsx`: entfernen.
 - [ ] **13. Jedes MAKE lädt alle Schriften hoch** – `src/lib/latex.ts`: Ressourcen per URL, falls die ytotech-API das kann.
 
 (Audit-Fund „Blob-URLs werden nie freigegeben“ ist Teil von Punkt 2.)

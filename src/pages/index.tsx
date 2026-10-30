@@ -117,7 +117,6 @@ export default function Home() {
           To build the PDF, your resume is sent to{' '}
           <a href="https://latex.ytotech.com">latex.ytotech.com</a>.
         </span>
-        <Link href="/about">About</Link>
         <a href="https://github.com/saadq/resumake">Source</a>
         <a href="https://github.com/saadq/resumake/issues">Issues</a>
       </Footer>

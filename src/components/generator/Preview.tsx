@@ -77,6 +77,13 @@ const ToolButton = styled.button`
   }
 `
 
+const Status = styled.span`
+  align-self: center;
+  margin-left: auto;
+  font-size: 12px;
+  color: #ddd;
+`
+
 // Form values are persisted here on every change (see Form/index.tsx)
 function getFormJson() {
   return localStorage.getItem('jsonResume') || '{}'
@@ -98,13 +105,19 @@ function downloadJson() {
 }
 
 async function downloadSource() {
-  const res = await fetch('/api/generate-source', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: getFormJson()
-  })
-  if (res.ok) {
+  try {
+    const res = await fetch('/api/generate-source', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: getFormJson()
+    })
+    if (!res.ok) {
+      throw new Error(await res.text())
+    }
     download(await res.blob(), 'resume.zip')
+  } catch (error) {
+    console.error(error)
+    alert('Could not create the LaTeX files. Please try again.')
   }
 }
 
@@ -134,6 +147,10 @@ export function Preview() {
         <ToolButton type="button" onClick={downloadJson}>
           <MdFileDownload /> JSON
         </ToolButton>
+        {resume.isLoading && <Status>Building PDF…</Status>}
+        {resume.isError && (
+          <Status>Could not build the PDF. Please try again.</Status>
+        )}
       </Toolbar>
       <PdfContainer>
         <ResumeDocument

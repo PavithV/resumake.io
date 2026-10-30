@@ -3,7 +3,7 @@
 Ergebnis des Ponytail-Audits vom 2026-10-30. Die Punkte werden der Reihe nach abgearbeitet und abgehakt.
 
 - [x] **1. Import ohne `sections` stürzt ab** – `src/lib/sanitize.ts` `normalizeResume`: Standardwerte für `sections` und `headings` setzen.
-- [ ] **2. Fehler/Laden unsichtbar** – `Preview.tsx`, `Form/index.tsx`: `isLoading`/`isError` anzeigen, `isError` zurücksetzen, alte Blob-URL freigeben, Fehler beim LaTeX-Download melden.
+- [x] **2. Fehler/Laden unsichtbar** – `Preview.tsx`, `Form/index.tsx`: `isLoading`/`isError` anzeigen, `isError` zurücksetzen, alte Blob-URL freigeben, Fehler beim LaTeX-Download melden.
 - [ ] **3. Kaputte Import-Datei sperrt Generator** – `src/pages/index.tsx`, `Form/index.tsx`: Datei prüfen (gültiges JSON-Objekt), sonst Meldung.
 - [ ] **4. Keine Tests, CI baut nicht** – Test für alle 9 Vorlagen (Sonderzeichen, fehlende `sections`), `npm test` + `npm run build` in CI.
 - [ ] **5. GET auf API hängt** – `src/pages/api/generate-source.ts`: `res.status(405).end()`.

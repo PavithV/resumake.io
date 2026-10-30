@@ -1,5 +1,6 @@
 import { stripIndent, source } from 'common-tags'
 import { WHITESPACE } from './constants'
+import renderSections from './sections'
 import type { FormValues, Generator } from '../../types'
 
 const generator: Generator = {
@@ -349,42 +350,12 @@ const generator: Generator = {
 }
 
 function template4(values: FormValues) {
-  const { headings = {} } = values
-
   return stripIndent`
     ${generator.resumeHeader()}
     \\documentclass[]{deedy-resume-openfont}
 
     \\begin{document}
-    ${values.sections
-      .map((section) => {
-        switch (section) {
-          case 'profile':
-            return generator.profileSection(values.basics)
-
-          case 'education':
-            return generator.educationSection(
-              values.education,
-              headings.education
-            )
-
-          case 'work':
-            return generator.workSection(values.work, headings.work)
-
-          case 'skills':
-            return generator.skillsSection(values.skills, headings.skills)
-
-          case 'projects':
-            return generator.projectsSection(values.projects, headings.projects)
-
-          case 'awards':
-            return generator.awardsSection(values.awards, headings.awards)
-
-          default:
-            return ''
-        }
-      })
-      .join('\n')}
+    ${renderSections(generator, values).join('\n')}
     ${WHITESPACE}
     \\end{document}
   `

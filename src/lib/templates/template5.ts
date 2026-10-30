@@ -1,5 +1,6 @@
 import { stripIndent, source } from 'common-tags'
 import { WHITESPACE } from './constants'
+import renderSections from './sections'
 import type { FormValues, Generator } from '../../types'
 
 const generator: Omit<Generator, 'resumeHeader'> = {
@@ -230,7 +231,11 @@ const generator: Omit<Generator, 'resumeHeader'> = {
 }
 
 function template5(values: FormValues) {
-  const { headings = {} } = values
+  // The profile goes above the resume environment, not between the sections
+  const sections = renderSections(
+    { ...generator, profileSection: () => '' },
+    values
+  )
 
   return stripIndent`
     \\documentclass[line,margin]{res}
@@ -243,35 +248,7 @@ function template5(values: FormValues) {
       ${generator.profileSection(values.basics)}
       \\begin{resume}
         \\vspace{-5mm}
-        ${values.sections
-          .map((section) => {
-            switch (section) {
-              case 'education':
-                return generator.educationSection(
-                  values.education,
-                  headings.education
-                )
-
-              case 'work':
-                return generator.workSection(values.work, headings.work)
-
-              case 'skills':
-                return generator.skillsSection(values.skills, headings.skills)
-
-              case 'projects':
-                return generator.projectsSection(
-                  values.projects,
-                  headings.projects
-                )
-
-              case 'awards':
-                return generator.awardsSection(values.awards, headings.awards)
-
-              default:
-                return ''
-            }
-          })
-          .join('\n')}
+        ${sections.join('\n')}
         ${WHITESPACE}
       \\end{resume}
     \\end{document}

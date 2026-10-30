@@ -9,7 +9,7 @@ Ergebnis des Ponytail-Audits vom 2026-10-30. Die Punkte werden der Reihe nach ab
 - [x] **5. GET auf API hängt** – `src/pages/api/generate-source.ts`: `res.status(405).end()`.
 - [x] **6. Vorlage 6 macht geschützte Zeichen kaputt** – `template6.ts`: `\MakeUppercase{…}` statt `toUpperCase()`. *Im Test abgesichert (`/\\TEXT/`).*
 - [x] **7. Datenschutz-Hinweis fehlt** – README + Startseite: Daten gehen zum Kompilieren an latex.ytotech.com.
-- [ ] **8. Abschnitts-Weiche 9× kopiert** – eine gemeinsame `renderSections` in `src/lib/templates`.
+- [x] **8. Abschnitts-Weiche 9× kopiert** – eine gemeinsame `renderSections` in `src/lib/templates`. *Eigene Datei `sections.ts`, weil `index.ts` die Vorlagen importiert (sonst Import-Kreis). Vorlagen 5, 7, 8 übergeben `profileSection: () => ''`, weil sie das Profil im Vorspann setzen. LaTeX-Ausgabe vorher/nachher für 30 Fälle byte-gleich.*
 - [ ] **9. `getTemplateData` als 150-Zeilen-Switch** – Tabelle statt Switch, Konstanten entfallen.
 - [ ] **10. Toter Code** – `atoms/progress.ts`, `TEMPLATE10`, `NEWLINE`, `FormState`, `interface Resume`, `prettyDoc`-Rest.
 - [ ] **11. Griff-Symbole ohne Funktion** – `Sidebar.tsx`, `Highlights.tsx`: entfernen.

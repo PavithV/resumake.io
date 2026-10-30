@@ -1,5 +1,6 @@
 import { stripIndent, source } from 'common-tags'
 import { WHITESPACE } from './constants'
+import renderSections from './sections'
 import type { FormValues, Generator } from '../../types'
 
 const generator: Generator = {
@@ -227,39 +228,18 @@ const generator: Generator = {
 }
 
 function template7(values: FormValues) {
-  const { headings = {} } = values
+  // The profile goes into the preamble, not between the sections
+  const sections = renderSections(
+    { ...generator, profileSection: () => '' },
+    values
+  )
 
   return stripIndent`
     ${generator.resumeHeader()}
     ${generator.profileSection(values.basics)}
     \\begin{document}
     ${values.basics ? '\\makecvtitle' : ''}
-    ${values.sections
-      .map((section) => {
-        switch (section) {
-          case 'education':
-            return generator.educationSection(
-              values.education,
-              headings.education
-            )
-
-          case 'work':
-            return generator.workSection(values.work, headings.work)
-
-          case 'skills':
-            return generator.skillsSection(values.skills, headings.skills)
-
-          case 'projects':
-            return generator.projectsSection(values.projects, headings.projects)
-
-          case 'awards':
-            return generator.awardsSection(values.awards, headings.awards)
-
-          default:
-            return ''
-        }
-      })
-      .join('\n')}
+    ${sections.join('\n')}
     ${WHITESPACE}
     \\end{document}
   `

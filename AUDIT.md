@@ -14,7 +14,7 @@ Ergebnis des Ponytail-Audits vom 2026-10-30. Die Punkte werden der Reihe nach ab
 - [x] **10. Toter Code** – `atoms/progress.ts`, `TEMPLATE10`, `NEWLINE`, `FormState`, `interface Resume`, `prettyDoc`-Rest.
 - [x] **11. Griff-Symbole ohne Funktion** – `Sidebar.tsx`, `Highlights.tsx`: entfernen.
 - [x] **12. `/about`-Link führt auf 404** – `src/pages/index.tsx`: entfernen.
-- [ ] **13. Jedes MAKE lädt alle Schriften hoch** – `src/lib/latex.ts`: Ressourcen per URL, falls die ytotech-API das kann.
+- [ ] **13. Jedes MAKE lädt alle Schriften hoch** – `src/lib/latex.ts`: Ressourcen per URL, falls die ytotech-API das kann. *Nicht umgesetzt: Die API kennt `{ path, url }`, aber laut [README](https://github.com/YtoTech/latex-on-http) werden URL-Ressourcen „mit UTF-8 dekodiert“ (Risiko für binäre Schriften), Caching ist nicht dokumentiert, und von `localhost` aus ginge es nicht. Erst mit einem echten Test gegen die deployte App angehen.*
 
 (Audit-Fund „Blob-URLs werden nie freigegeben“ ist Teil von Punkt 2.)
 

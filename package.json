@@ -10,6 +10,7 @@
     "start": "next start",
     "build": "next build",
     "lint": "next lint",
+    "test": "tsx --test src/lib/templates/templates.test.ts",
     "format": "prettier --write src",
     "format:check": "prettier --check src"
   },
@@ -42,6 +43,7 @@
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "2.7.1",
+    "tsx": "^4.23.15",
     "typescript": "4.5.3"
   },
   "prettier": {

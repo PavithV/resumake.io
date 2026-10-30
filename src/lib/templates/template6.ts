@@ -1,5 +1,6 @@
 import { stripIndent, source } from 'common-tags'
 import { WHITESPACE } from './constants'
+import renderSections from './sections'
 import type { FormValues, Generator } from '../../types'
 
 const generator: Omit<Generator, 'resumeHeader'> = {
@@ -17,7 +18,7 @@ const generator: Omit<Generator, 'resumeHeader'> = {
       \\begin{center}
       % Personal
       % -----------------------------------------------------
-      {\\fontsize{\\sizeone}{\\sizeone}\\fontspec[Path = fonts/,LetterSpace=15]{Montserrat-Regular} ${name.toUpperCase()}}
+      {\\fontsize{\\sizeone}{\\sizeone}\\fontspec[Path = fonts/,LetterSpace=15]{Montserrat-Regular} \\MakeUppercase{${name}}}
       ${name && info.length > 1 ? '\\\\' : ''}
       \\vspace{2mm}
       {\\fontsize{1em}{1em}\\fontspec[Path = fonts/]{Montserrat-Light} ${info.join(
@@ -36,7 +37,7 @@ const generator: Omit<Generator, 'resumeHeader'> = {
       % Chapter: Education
       % ------------------
 
-      \\chap{${heading ? heading.toUpperCase() : 'EDUCATION'}}{
+      \\chap{\\MakeUppercase{${heading || 'Education'}}}{
 
       ${education.map((school) => {
         const {
@@ -88,7 +89,7 @@ const generator: Omit<Generator, 'resumeHeader'> = {
     return source`
       % Chapter: Work Experience
       % ------------------------
-      \\chap{${heading ? heading.toUpperCase() : 'EXPERIENCE'}}{
+      \\chap{\\MakeUppercase{${heading || 'Experience'}}}{
 
       ${work.map((job) => {
         const {
@@ -141,7 +142,7 @@ const generator: Omit<Generator, 'resumeHeader'> = {
       % Chapter: Skills
       % ------------------------
 
-      \\chap{${heading ? heading.toUpperCase() : 'SKILLS'}}{
+      \\chap{\\MakeUppercase{${heading || 'Skills'}}}{
       \\begin{newitemize}
         ${skills.map((skill) => {
           const { name = '', keywords = [] } = skill
@@ -172,7 +173,7 @@ const generator: Omit<Generator, 'resumeHeader'> = {
       % Chapter: Projects
       % ------------------------
 
-      \\chap{${heading ? heading.toUpperCase() : 'PROJECTS'}}{
+      \\chap{\\MakeUppercase{${heading || 'Projects'}}}{
 
         ${projects.map((project) => {
           const {
@@ -208,7 +209,7 @@ const generator: Omit<Generator, 'resumeHeader'> = {
       % Chapter: Awards
       % ------------------------
 
-      \\chap{${heading ? heading.toUpperCase() : 'AWARDS'}}{
+      \\chap{\\MakeUppercase{${heading || 'Awards'}}}{
 
         ${awards.map((award) => {
           const { title = '', summary = '', awarder = '', date = '' } = award
@@ -227,43 +228,13 @@ const generator: Omit<Generator, 'resumeHeader'> = {
 }
 
 function template6(values: FormValues) {
-  const { headings = {} } = values
-
   return stripIndent`
     \\documentclass[10pt]{article}
     \\usepackage[english]{babel}
     \\usepackage[hidelinks]{hyperref}
     \\input{minimal-resume-config}
     \\begin{document}
-    ${values.sections
-      .map((section) => {
-        switch (section) {
-          case 'profile':
-            return generator.profileSection(values.basics)
-
-          case 'education':
-            return generator.educationSection(
-              values.education,
-              headings.education
-            )
-
-          case 'work':
-            return generator.workSection(values.work, headings.work)
-
-          case 'skills':
-            return generator.skillsSection(values.skills, headings.skills)
-
-          case 'projects':
-            return generator.projectsSection(values.projects, headings.projects)
-
-          case 'awards':
-            return generator.awardsSection(values.awards, headings.awards)
-
-          default:
-            return ''
-        }
-      })
-      .join('\n')}
+    ${renderSections(generator, values).join('\n')}
     ${WHITESPACE}
     \\end{document}
   `

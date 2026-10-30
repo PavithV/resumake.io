@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method !== 'POST') {
-    res.status(405)
+    res.status(405).end()
     return
   }
 
@@ -31,11 +31,10 @@ export default async function handler(
  */
 function generateSourceCode(formData: FormValues) {
   const { texDoc, opts } = getTemplateData(formData)
-  const prettyDoc = /*prettify(texDoc)*/ texDoc
   const zip = Archiver('zip')
   const readme = makeReadme(formData.selectedTemplate, opts.cmd)
 
-  zip.append(prettyDoc, { name: 'resume.tex' })
+  zip.append(texDoc, { name: 'resume.tex' })
   zip.append(readme, { name: 'README.md' })
 
   // Same layout as the in-browser compile in lib/latex.ts

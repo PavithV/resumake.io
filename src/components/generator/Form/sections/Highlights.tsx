@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { useFieldArray } from 'react-hook-form'
-import { MdClose, MdDragIndicator } from 'react-icons/md'
+import { MdClose } from 'react-icons/md'
 import styled from 'styled-components'
 
 import { Input } from '../../../core/Input'
@@ -9,7 +9,7 @@ import { IconButton } from '../../../core/Button'
 
 const ListContainer = styled.div`
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: 1fr auto;
   gap: 4px;
   margin: 0.5rem 0;
 `
@@ -33,16 +33,13 @@ export default function Highlights({
       <ListContainer>
         {fields.map((field, i) => (
           <Fragment key={field.id}>
-            <IconButton type="button">
-              <MdDragIndicator />
-            </IconButton>
             <Input name={`${name}.${i}`} placeholder={placeholder} />
             <IconButton type="button" onClick={() => remove(i)}>
               <MdClose />
             </IconButton>
           </Fragment>
         ))}
-        <FormInput style={{ gridColumn: '2/3' }} onSubmit={append} />
+        <FormInput style={{ gridColumn: '1/2' }} onSubmit={append} />
       </ListContainer>
     </>
   )

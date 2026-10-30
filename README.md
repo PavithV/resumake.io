@@ -11,6 +11,8 @@ Simply choose a template, fill in as much (or as little) info as you want, and t
 
 When you're happy with your result, you can download the resume as a PDF, TeX, or JSON document. The JSON output is compatible with [JSONResume](https://jsonresume.org).
 
+**Privacy:** Your resume is stored only in your browser. To build the PDF, the generated LaTeX (including your personal data) is sent to the third-party service [latex.ytotech.com](https://latex.ytotech.com).
+
 ## Credits
 Thanks very much to the creators of the LaTeX templates used in this website.
 

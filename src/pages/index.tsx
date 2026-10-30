@@ -7,6 +7,7 @@ import { lighten, darken } from 'polished'
 import { Logo } from '../components/core/Logo'
 import { PrimaryButton, Button } from '../components/core/Button'
 import { colors } from '../theme'
+import { parseResume } from '../lib/sanitize'
 
 const Wrapper = styled.div`
   height: 100vh;
@@ -69,18 +70,25 @@ export default function Home() {
     router.push('/generator')
   }
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    // Lets the same file be picked again after fixing it
+    e.target.value = ''
+    if (!file) {
+      return
+    }
+
     const reader = new FileReader()
-    reader.addEventListener('load', (e) => {
-      // TODO: validate JSON schema using Zod
-      const jsonResume = JSON.parse(e.target?.result as string)
+    reader.addEventListener('load', () => {
+      const jsonResume = parseResume(reader.result as string)
+      if (!jsonResume) {
+        alert('This file is not a valid JSON resume.')
+        return
+      }
       localStorage.setItem('jsonResume', JSON.stringify(jsonResume))
       router.push('/generator')
     })
-
-    if (e.target.files) {
-      reader.readAsText(e.target.files[0])
-    }
+    reader.readAsText(file)
   }
 
   return (
@@ -105,7 +113,10 @@ export default function Home() {
       </Main>
       <Footer>
         <Copyright>© 2022 Saad Quadri</Copyright>
-        <Link href="/about">About</Link>
+        <span>
+          To build the PDF, your resume is sent to{' '}
+          <a href="https://latex.ytotech.com">latex.ytotech.com</a>.
+        </span>
         <a href="https://github.com/saadq/resumake">Source</a>
         <a href="https://github.com/saadq/resumake/issues">Issues</a>
       </Footer>

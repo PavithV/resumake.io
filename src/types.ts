@@ -114,10 +114,6 @@ export type FormValues = Resume & {
   selectedTemplate: number
 }
 
-export interface FormState {
-  isGenerating: boolean
-}
-
 export type Generator = {
   resumeHeader: () => string
   profileSection: (basics?: Basics) => string

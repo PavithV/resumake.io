@@ -11,7 +11,7 @@ Ergebnis des Ponytail-Audits vom 2026-10-30. Die Punkte werden der Reihe nach ab
 - [x] **7. Datenschutz-Hinweis fehlt** – README + Startseite: Daten gehen zum Kompilieren an latex.ytotech.com.
 - [x] **8. Abschnitts-Weiche 9× kopiert** – eine gemeinsame `renderSections` in `src/lib/templates`. *Eigene Datei `sections.ts`, weil `index.ts` die Vorlagen importiert (sonst Import-Kreis). Vorlagen 5, 7, 8 übergeben `profileSection: () => ''`, weil sie das Profil im Vorspann setzen. LaTeX-Ausgabe vorher/nachher für 30 Fälle byte-gleich.*
 - [x] **9. `getTemplateData` als 150-Zeilen-Switch** – Tabelle statt Switch, Konstanten entfallen. *Neuer Export `TEMPLATE_IDS`; Ergebnis alt/neu für IDs 0–11 gleich (inkl. Fallback auf 1).*
-- [ ] **10. Toter Code** – `atoms/progress.ts`, `TEMPLATE10`, `NEWLINE`, `FormState`, `interface Resume`, `prettyDoc`-Rest.
+- [x] **10. Toter Code** – `atoms/progress.ts`, `TEMPLATE10`, `NEWLINE`, `FormState`, `interface Resume`, `prettyDoc`-Rest.
 - [ ] **11. Griff-Symbole ohne Funktion** – `Sidebar.tsx`, `Highlights.tsx`: entfernen.
 - [ ] **12. `/about`-Link führt auf 404** – `src/pages/index.tsx`: entfernen.
 - [ ] **13. Jedes MAKE lädt alle Schriften hoch** – `src/lib/latex.ts`: Ressourcen per URL, falls die ytotech-API das kann.

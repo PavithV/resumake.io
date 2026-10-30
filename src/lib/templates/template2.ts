@@ -121,7 +121,7 @@ const generator: Generator = {
         const { name, position, location, startDate, endDate, highlights } = job
 
         let dateRange
-        let dutyLines
+        let dutyLines = ''
 
         if (startDate && endDate) {
           dateRange = `${startDate} – ${endDate}`

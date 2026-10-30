@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method !== 'POST') {
-    res.status(405)
+    res.status(405).end()
     return
   }
 

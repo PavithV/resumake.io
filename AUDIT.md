@@ -6,7 +6,7 @@ Ergebnis des Ponytail-Audits vom 2026-10-30. Die Punkte werden der Reihe nach ab
 - [x] **2. Fehler/Laden unsichtbar** – `Preview.tsx`, `Form/index.tsx`: `isLoading`/`isError` anzeigen, `isError` zurücksetzen, alte Blob-URL freigeben, Fehler beim LaTeX-Download melden.
 - [x] **3. Kaputte Import-Datei sperrt Generator** – `src/pages/index.tsx`, `Form/index.tsx`: Datei prüfen (gültiges JSON-Objekt), sonst Meldung. *Gemeinsame Prüfung: `parseResume` in `sanitize.ts`.*
 - [x] **4. Keine Tests, CI baut nicht** – Test für alle 9 Vorlagen (Sonderzeichen, fehlende `sections`), `npm test` + `npm run build` in CI. *`src/lib/templates/templates.test.ts` mit `node:test` + `tsx`. Der Test fand einen neuen Fehler: Vorlage 2 und 3 schrieben `undefined` ins PDF, wenn ein Job keine Stichpunkte hat (behoben). Die Testdatei ist aus `tsconfig` ausgenommen, weil TypeScript 4.5 / `@types/node` 16 `node:test` nicht kennen.*
-- [ ] **5. GET auf API hängt** – `src/pages/api/generate-source.ts`: `res.status(405).end()`.
+- [x] **5. GET auf API hängt** – `src/pages/api/generate-source.ts`: `res.status(405).end()`.
 - [ ] **6. Vorlage 6 macht geschützte Zeichen kaputt** – `template6.ts`: `\MakeUppercase{…}` statt `toUpperCase()`.
 - [ ] **7. Datenschutz-Hinweis fehlt** – README + Startseite: Daten gehen zum Kompilieren an latex.ytotech.com.
 - [ ] **8. Abschnitts-Weiche 9× kopiert** – eine gemeinsame `renderSections` in `src/lib/templates`.

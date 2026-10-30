@@ -55,6 +55,8 @@ for (const id of TEMPLATES) {
     const { texDoc } = getTemplateData({ ...resume, selectedTemplate: id })
     assert.ok(texDoc.includes(escaped))
     assert.ok(!texDoc.includes(special))
+    // Uppercasing in JS would turn \textbackslash into an unknown \TEXTBACKSLASH
+    assert.doesNotMatch(texDoc, /\\TEXT/)
   })
 
   test(`template ${id} renders a plain JSON Resume`, () => {

@@ -15,7 +15,7 @@ import { resumeAtom } from '../../../atoms/resume'
 import { FormValues } from '../../../types'
 
 import latex from '../../../lib/latex'
-import { DEFAULT_SECTIONS, normalizeResume } from '../../../lib/sanitize'
+import { DEFAULT_SECTIONS, parseResume } from '../../../lib/sanitize'
 import getTemplateData from '../../../lib/templates'
 
 async function generateResume(formData: FormValues): Promise<string> {
@@ -44,10 +44,9 @@ export function Form() {
   // TODO: move this to a custom react hook
   useEffect(() => {
     const lastSession = localStorage.getItem('jsonResume')
-    if (lastSession) {
-      // TODO: validate JSON schema using Zod
-      const jsonResume = JSON.parse(lastSession) as FormValues
-      formContext.reset(normalizeResume(jsonResume))
+    const jsonResume = lastSession && parseResume(lastSession)
+    if (jsonResume) {
+      formContext.reset(jsonResume)
     }
     const subscription = formContext.watch((data) => {
       localStorage.setItem('jsonResume', JSON.stringify(data))

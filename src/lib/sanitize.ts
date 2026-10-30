@@ -63,6 +63,21 @@ export function normalizeResume<T extends Partial<FormValues>>(values: T): T {
 }
 
 /**
+ * Parses a stored or uploaded resume.
+ * Returns null if the text is not a JSON object.
+ */
+export function parseResume(text: string): FormValues | null {
+  try {
+    const value = JSON.parse(text)
+    return value && typeof value === 'object' && !Array.isArray(value)
+      ? normalizeResume(value)
+      : null
+  } catch {
+    return null
+  }
+}
+
+/**
  * Escapes all user-provided text so that it can be safely
  * inserted into a LaTeX document.
  */

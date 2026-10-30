@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import getTemplateData from '.'
-import { TEMPLATES } from './constants'
+import getTemplateData, { TEMPLATE_IDS } from '.'
 import { DEFAULT_SECTIONS } from '../sanitize'
 import { FormValues } from '../../types'
 
@@ -50,7 +49,7 @@ const resume: FormValues = {
   selectedTemplate: 1
 }
 
-for (const id of TEMPLATES) {
+for (const id of TEMPLATE_IDS) {
   test(`template ${id} escapes user text`, () => {
     const { texDoc } = getTemplateData({ ...resume, selectedTemplate: id })
     assert.ok(texDoc.includes(escaped))

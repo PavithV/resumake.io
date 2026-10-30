@@ -2,7 +2,7 @@ import { useFormContext, Controller } from 'react-hook-form'
 import styled from 'styled-components'
 
 import { FormSection } from './FormSection'
-import { TEMPLATES } from '../../../../lib/templates/constants'
+import { TEMPLATE_IDS } from '../../../../lib/templates'
 import { colors } from '../../../../theme'
 
 import { FormValues } from '../../../../types'
@@ -57,7 +57,7 @@ export function TemplatesSection() {
         name="selectedTemplate"
         render={({ field }) => (
           <Grid>
-            {TEMPLATES.map((templateId) => (
+            {TEMPLATE_IDS.map((templateId) => (
               <Card key={templateId} $active={field.value === templateId}>
                 <input
                   type="radio"

@@ -1,10 +1,9 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import { MdDragIndicator } from 'react-icons/md'
 
 import { colors } from '../../theme'
-import { PrimaryButton, IconButton } from '../core/Button'
+import { PrimaryButton } from '../core/Button'
 
 const Aside = styled.aside`
   grid-area: sidebar;
@@ -19,10 +18,6 @@ const Nav = styled.nav`
   justify-content: center;
   gap: 24px;
   margin-bottom: 28px;
-
-  button {
-    cursor: grab;
-  }
 `
 
 const StyledLink = styled(Link)<{ $active: boolean }>`
@@ -51,17 +46,13 @@ export function Sidebar() {
     <Aside>
       <Nav>
         {sectionLinks.map(({ label, section }) => (
-          <div key={section} style={{ display: 'flex', gap: 8 }}>
-            <IconButton type="button">
-              <MdDragIndicator />
-            </IconButton>
-            <StyledLink
-              href={`/generator?section=${section}`}
-              $active={section === currSection}
-            >
-              {label}
-            </StyledLink>
-          </div>
+          <StyledLink
+            key={section}
+            href={`/generator?section=${section}`}
+            $active={section === currSection}
+          >
+            {label}
+          </StyledLink>
         ))}
       </Nav>
 

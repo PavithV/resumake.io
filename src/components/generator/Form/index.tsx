@@ -15,7 +15,7 @@ import { resumeAtom } from '../../../atoms/resume'
 import { FormValues } from '../../../types'
 
 import latex from '../../../lib/latex'
-import { normalizeResume } from '../../../lib/sanitize'
+import { DEFAULT_SECTIONS, normalizeResume } from '../../../lib/sanitize'
 import getTemplateData from '../../../lib/templates'
 
 async function generateResume(formData: FormValues): Promise<string> {
@@ -30,7 +30,7 @@ const StyledForm = styled.form`
 
 const initialFormValues: FormValues = {
   headings: {},
-  sections: ['profile', 'education', 'work', 'skills', 'projects', 'awards'],
+  sections: DEFAULT_SECTIONS,
   selectedTemplate: 1
 }
 

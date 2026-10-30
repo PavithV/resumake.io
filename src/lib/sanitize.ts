@@ -35,19 +35,27 @@ function escapeValue(value: unknown): unknown {
   return value
 }
 
+export const DEFAULT_SECTIONS: FormValues['sections'] = [
+  'profile',
+  'education',
+  'work',
+  'skills',
+  'projects',
+  'awards'
+]
+
 /**
- * Migrates resumes created with older versions of resumake.io,
+ * Fills in the resumake-specific fields that plain JSON Resume files lack,
+ * and migrates resumes created with older versions of resumake.io,
  * which stored the company of a work entry as `company` instead of
  * the JSON Resume standard `name`.
  */
 export function normalizeResume<T extends Partial<FormValues>>(values: T): T {
-  if (!values.work) {
-    return values
-  }
-
   return {
     ...values,
-    work: values.work.map(({ company, ...job }: Work) => ({
+    headings: values.headings || {},
+    sections: values.sections || DEFAULT_SECTIONS,
+    work: values.work?.map(({ company, ...job }: Work) => ({
       ...job,
       name: job.name || company || ''
     }))
@@ -64,7 +72,7 @@ export function sanitize(values: FormValues): FormValues {
 
   return {
     ...(escapeValue(resume) as FormValues),
-    headings: escapeValue(headings || {}) as FormValues['headings'],
+    headings: escapeValue(headings) as FormValues['headings'],
     sections,
     selectedTemplate
   }

@@ -14,6 +14,8 @@ const Grid = styled.div`
 `
 
 const Card = styled.label<{ $active: boolean }>`
+  /* keeps the hidden radio inside the form's scroll box, so focusing it doesn't scroll the page */
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

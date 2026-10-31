@@ -10,7 +10,7 @@ import Keywords from './Keywords'
 import { Skill } from '../../../../types'
 
 export function SkillsSection() {
-  const { fields, append, remove } =useFieldArray({ name: 'skills' })
+  const { fields, append, remove } = useFieldArray({ name: 'skills' })
 
   const handleAdd = () => {
     const defaultSkill: Skill = {

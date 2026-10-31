@@ -9,7 +9,7 @@ import { Divider } from '../../../core/Divider'
 import { Award } from '../../../../types'
 
 export function AwardSection() {
-  const { fields, append, remove } =useFieldArray({ name: 'awards' })
+  const { fields, append, remove } = useFieldArray({ name: 'awards' })
 
   const handleAdd = () => {
     const defaultAward: Award = {

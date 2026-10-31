@@ -10,7 +10,7 @@ import Highlights from './Highlights'
 import { Work } from '../../../../types'
 
 export function WorkSection() {
-  const { fields, append, remove } =useFieldArray({ name: 'work' })
+  const { fields, append, remove } = useFieldArray({ name: 'work' })
 
   const handleAdd = () => {
     const defaultWork: Work = {

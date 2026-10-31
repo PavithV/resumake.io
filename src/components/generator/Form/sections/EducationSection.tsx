@@ -9,7 +9,7 @@ import { Divider } from '../../../core/Divider'
 import { Education } from '../../../../types'
 
 export function EducationSection() {
-  const { fields, append, remove } =useFieldArray({ name: 'education' })
+  const { fields, append, remove } = useFieldArray({ name: 'education' })
 
   const handleAdd = () => {
     const defaultEducation: Education = {

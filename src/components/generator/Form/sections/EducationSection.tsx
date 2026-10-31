@@ -9,7 +9,7 @@ import { Divider } from '../../../core/Divider'
 import { Education } from '../../../../types'
 
 export function EducationSection() {
-  const { fields, append } = useFieldArray({ name: 'education' })
+  const { fields, append, remove } = useFieldArray({ name: 'education' })
 
   const handleAdd = () => {
     const defaultEducation: Education = {
@@ -68,6 +68,9 @@ export function EducationSection() {
             label="End Date"
             placeholder="Jun 2019"
           />
+          <AddButton type="button" onClick={() => remove(index)}>
+            − Remove School
+          </AddButton>
           <Divider />
         </Fragment>
       ))}

@@ -70,4 +70,23 @@ for (const id of TEMPLATE_IDS) {
     // \b skips LaTeX's own \@ifundefined
     assert.doesNotMatch(texDoc, /\bundefined\b/)
   })
+
+  test(`template ${id} skips blank entries and empty sections`, () => {
+    const school = { institution: 'Hochschule Karlsruhe' }
+    const base = {
+      basics: { name: 'Ada Lovelace' },
+      education: [school],
+      headings: { work: 'WorkHeading' },
+      sections: DEFAULT_SECTIONS,
+      selectedTemplate: id
+    } as FormValues
+    const withBlanks = {
+      ...base,
+      education: [school, { institution: '', location: '', endDate: '' }],
+      work: [{ name: '', location: '', highlights: [] }]
+    } as FormValues
+    const { texDoc } = getTemplateData(withBlanks)
+    assert.equal(texDoc, getTemplateData(base).texDoc)
+    assert.ok(!texDoc.includes('WorkHeading'))
+  })
 }

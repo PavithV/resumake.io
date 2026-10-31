@@ -10,7 +10,7 @@ import Keywords from './Keywords'
 import { Project } from '../../../../types'
 
 export function ProjectsSection() {
-  const { fields, append } = useFieldArray({ name: 'projects' })
+  const { fields, append, remove } = useFieldArray({ name: 'projects' })
 
   const handleAdd = () => {
     const defaultProject: Project = {
@@ -57,6 +57,9 @@ export function ProjectsSection() {
             placeholder="TypeScript"
             name={`projects.${index}.keywords`}
           />
+          <AddButton type="button" onClick={() => remove(index)}>
+            − Remove Project
+          </AddButton>
           <Divider />
         </Fragment>
       ))}

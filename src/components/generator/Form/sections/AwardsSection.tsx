@@ -9,7 +9,7 @@ import { Divider } from '../../../core/Divider'
 import { Award } from '../../../../types'
 
 export function AwardSection() {
-  const { fields, append } = useFieldArray({ name: 'awards' })
+  const { fields, append, remove } = useFieldArray({ name: 'awards' })
 
   const handleAdd = () => {
     const defaultAward: Award = {
@@ -56,6 +56,9 @@ export function AwardSection() {
             label="Summary"
             placeholder="Recognized for creating the most awesome project at a hackathon."
           />
+          <AddButton type="button" onClick={() => remove(index)}>
+            − Remove Award
+          </AddButton>
           <Divider />
         </Fragment>
       ))}

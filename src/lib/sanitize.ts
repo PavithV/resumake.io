@@ -77,16 +77,39 @@ export function parseResume(text: string): FormValues | null {
   }
 }
 
+function hasContent(value: unknown): boolean {
+  if (Array.isArray(value)) {
+    return value.some(hasContent)
+  }
+  if (value && typeof value === 'object') {
+    return Object.values(value).some(hasContent)
+  }
+  return Boolean(value)
+}
+
+// Templates skip a section only when its list is missing, not when it is empty
+function nonBlank<T>(list?: T[]): T[] | undefined {
+  const kept = list?.filter(hasContent)
+  return kept?.length ? kept : undefined
+}
+
 /**
  * Escapes all user-provided text so that it can be safely
- * inserted into a LaTeX document.
+ * inserted into a LaTeX document, and drops entries the user left blank.
  */
 export function sanitize(values: FormValues): FormValues {
   const { headings, sections, selectedTemplate, ...resume } =
     normalizeResume(values)
 
   return {
-    ...(escapeValue(resume) as FormValues),
+    ...(escapeValue({
+      ...resume,
+      education: nonBlank(resume.education),
+      work: nonBlank(resume.work),
+      skills: nonBlank(resume.skills),
+      projects: nonBlank(resume.projects),
+      awards: nonBlank(resume.awards)
+    }) as FormValues),
     headings: escapeValue(headings) as FormValues['headings'],
     sections,
     selectedTemplate

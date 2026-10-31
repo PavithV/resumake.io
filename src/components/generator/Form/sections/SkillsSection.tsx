@@ -10,7 +10,7 @@ import Keywords from './Keywords'
 import { Skill } from '../../../../types'
 
 export function SkillsSection() {
-  const { fields, append } = useFieldArray({ name: 'skills' })
+  const { fields, append, remove } =useFieldArray({ name: 'skills' })
 
   const handleAdd = () => {
     const defaultSkill: Skill = {
@@ -45,6 +45,9 @@ export function SkillsSection() {
             placeholder="TypeScript"
             name={`skills.${index}.keywords`}
           />
+          <AddButton type="button" onClick={() => remove(index)}>
+            − Remove Skill
+          </AddButton>
           <Divider />
         </Fragment>
       ))}

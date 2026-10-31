@@ -10,7 +10,7 @@ import Highlights from './Highlights'
 import { Work } from '../../../../types'
 
 export function WorkSection() {
-  const { fields, append } = useFieldArray({ name: 'work' })
+  const { fields, append, remove } =useFieldArray({ name: 'work' })
 
   const handleAdd = () => {
     const defaultWork: Work = {
@@ -75,6 +75,9 @@ export function WorkSection() {
             placeholder="Did cool stuff at company"
             name={`work.${index}.highlights`}
           />
+          <AddButton type="button" onClick={() => remove(index)}>
+            − Remove Work Experience
+          </AddButton>
           <Divider />
         </Fragment>
       ))}

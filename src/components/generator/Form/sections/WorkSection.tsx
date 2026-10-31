@@ -16,6 +16,7 @@ export function WorkSection() {
     const defaultWork: Work = {
       name: '',
       position: '',
+      location: '',
       summary: '',
       startDate: '',
       endDate: '',
@@ -48,6 +49,11 @@ export function WorkSection() {
             name={`work.${index}.position`}
             label="Position"
             placeholder="Software Engineer"
+          />
+          <LabeledInput
+            name={`work.${index}.location`}
+            label="Location"
+            placeholder="Los Gatos, CA"
           />
           <LabeledInput
             name={`work.${index}.summary`}
